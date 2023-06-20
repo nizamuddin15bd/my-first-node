@@ -24,6 +24,7 @@ const users = [
   { id: 6, name: "ullah", email: "ullah@gmail.com", phone: "01254865141" },
 ];
 
+// filter by search query parameter
 app.get("/users", (req, res) => {
   if (req.query.name) {
     const search = req.query.name.toLocaleLowerCase();
