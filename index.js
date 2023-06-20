@@ -25,7 +25,15 @@ const users = [
 ];
 
 app.get("/users", (req, res) => {
-  res.send(users);
+  if (req.query.name) {
+    const search = req.query.name.toLocaleLowerCase();
+    const matched = users.filter((user) =>
+      user.name.toLocaleLowerCase().includes(search)
+    );
+    res.send(matched);
+  } else {
+    res.send(users);
+  }
 });
 
 app.get("/user/:id", (req, res) => {
@@ -38,7 +46,10 @@ app.get("/user/:id", (req, res) => {
 // POST
 app.post("/user", (req, res) => {
   console.log("request", req.body);
-  res.send("post data add hocca");
+  const user = req.body;
+  user.id = users.length + 1;
+  users.push(user);
+  res.send(user);
 });
 
 app.listen(port, () => {
